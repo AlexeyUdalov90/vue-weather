@@ -1,2 +1,2 @@
 # vue-weather
-Due weather app
+Vue weather app
