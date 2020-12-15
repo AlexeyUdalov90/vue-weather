@@ -8,9 +8,8 @@ import {
   ADD_ERROR,
   REMOVE_ERROR,
   CHANGE_CITY_NAME,
-  CHANGE_SUNRISE,
-  CHANGE_SUNSET,
-  CHANGE_FAVORITE_STATE
+  CHANGE_FAVORITE_STATE,
+  CHANGE_SUNTIME
 } from './mutation-types.js';
 
 Vue.use(Vuex);
@@ -32,10 +31,8 @@ const store = new Vuex.Store({
     [CHANGE_CITY_NAME](state, cityName) {
       state.cityName = cityName;
     },
-    [CHANGE_SUNRISE](state, sunrise) {
+    [CHANGE_SUNTIME](state, { sunrise, sunset }) {
       state.sunrise = sunrise;
-    },
-    [CHANGE_SUNSET](state, sunset) {
       state.sunset = sunset;
     },
     [CHANGE_WEATHER_LIST](state, weatherList) {
@@ -58,8 +55,7 @@ const store = new Vuex.Store({
           const { city: { name, sunrise, sunset }, list } = data;
 
           commit(CHANGE_CITY_NAME, name);
-          commit(CHANGE_SUNRISE, sunrise);
-          commit(CHANGE_SUNSET, sunset);
+          commit(CHANGE_SUNTIME, { sunrise, sunset });
           commit(CHANGE_WEATHER_LIST, list.slice(0, 5));
           if (state.error) {
             commit(REMOVE_ERROR);
