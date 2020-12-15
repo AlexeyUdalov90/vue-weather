@@ -4,9 +4,9 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M376 30c-27.783 0-53.255 8.804-75.707 26.168-21.525 16.647-35.856 37.85-44.293 53.268-8.437-15.419-22.768-36.621-44.293-53.268C189.255 38.804 163.783 30 136 30 58.468 30 0 93.417 0 177.514c0 90.854 72.943 153.015 183.369 247.118 18.752 15.981 40.007 34.095 62.099 53.414C248.38 480.596 252.12 482 256 482s7.62-1.404 10.532-3.953c22.094-19.322 43.348-37.435 62.111-53.425C439.057 330.529 512 268.368 512 177.514 512 93.417 453.532 30 376 30z"/></svg>
     </button>
     <ul class="favorites__list">
-      <li class="favorites__item" v-for="(city, index) in favoritesArray" :key="index">
-        <button class="favorites__button" @click.prevent="selectCityClickHandler(city)">{{ city }}</button>
-        <button class="favorites__delete" @click.prevent="deleteFavoriteCityClickHandler(city)"></button>
+      <li class="favorites__item" v-for="(city, index) in favorites" :key="index">
+        <button class="favorites__button" @click.prevent="selectCity(city)">{{ city }}</button>
+        <button class="favorites__delete" @click.prevent="deleteFavoriteCity(city)"></button>
       </li>
     </ul>
   </div>
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     ...mapState(['cityName']),
-    ...mapGetters(['isEmptyFavorites', 'favoritesArray']),
+    ...mapGetters(['isEmptyFavorites', 'favorites']),
   },
   methods: {
     ...mapMutations({
@@ -36,22 +36,22 @@ export default {
     toggleList() {
       this.isOpen = !this.isOpen;
     },
-    selectCityClickHandler(name) {
-      this.isOpen = false;
-      this.getWeather({ cityName: name }).then(() => {
-        this.changeFavoriteState({ isFavorite: true });
-        localStorage.setItem('lastCity', name);
+    selectCity(cityName) {
+      this.isOpen = !this.isOpen;
+      this.getWeather(cityName).then(() => {
+        this.changeFavoriteState(true);
+        localStorage.setItem('lastCity', cityName);
       });
     },
-    deleteFavoriteCityClickHandler(name) {
-      this.removeFavoriteCity({ cityName: name });
+    deleteFavoriteCity(cityName) {
+      this.removeFavoriteCity(cityName);
 
-      if (name.toLowerCase() === this.cityName.toLowerCase()) {
-        this.changeFavoriteState({ isFavorite: false });
+      if (cityName.toLowerCase() === this.cityName.toLowerCase()) {
+        this.changeFavoriteState(false);
       }
 
       if (this.isEmptyFavorites && this.isOpen) {
-        this.isOpen = false;
+        this.isOpen = !this.isOpen;
       }
     },
   },

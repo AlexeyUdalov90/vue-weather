@@ -35,10 +35,10 @@ export default {
     ...mapActions(['getWeather']),
     searchFormSubmitHandler() {
       const cityName = this.cityName;
-      this.getWeather({ cityName: cityName })
+      this.getWeather(cityName)
         .then(() => {
           localStorage.setItem('lastCity', cityName);
-          this.changeFavoriteState({ isFavorite: this.hasFavoriteCity(cityName) });
+          this.changeFavoriteState(this.hasFavoriteCity(cityName));
         });
     },
   },

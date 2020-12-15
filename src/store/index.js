@@ -29,22 +29,22 @@ const store = new Vuex.Store({
     sunrise: state => state.sunrise * 1000,
   },
   mutations: {
-    [CHANGE_CITY_NAME](state, { cityName }) {
+    [CHANGE_CITY_NAME](state, cityName) {
       state.cityName = cityName;
     },
-    [CHANGE_SUNRISE](state, { sunrise }) {
+    [CHANGE_SUNRISE](state, sunrise) {
       state.sunrise = sunrise;
     },
-    [CHANGE_SUNSET](state, { sunset }) {
+    [CHANGE_SUNSET](state, sunset) {
       state.sunset = sunset;
     },
-    [CHANGE_WEATHER_LIST](state, { weatherList }) {
+    [CHANGE_WEATHER_LIST](state, weatherList) {
       state.weatherList = weatherList;
     },
-    [CHANGE_FAVORITE_STATE](state, { isFavorite }) {
+    [CHANGE_FAVORITE_STATE](state, isFavorite) {
       state.isFavorite = isFavorite;
     },
-    [ADD_ERROR](state, { error }) {
+    [ADD_ERROR](state, error) {
       state.error = error;
     },
     [REMOVE_ERROR](state) {
@@ -52,21 +52,21 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    async getWeather({ commit, state }, { cityName }) {
+    async getWeather({ commit, state }, cityName) {
       await weatherRequest(cityName)
         .then((data) => {
           const { city: { name, sunrise, sunset }, list } = data;
 
-          commit(CHANGE_CITY_NAME, { cityName: name });
-          commit(CHANGE_SUNRISE, { sunrise });
-          commit(CHANGE_SUNSET, { sunset });
-          commit(CHANGE_WEATHER_LIST, { weatherList: list.slice(0, 5) });
+          commit(CHANGE_CITY_NAME, name);
+          commit(CHANGE_SUNRISE, sunrise);
+          commit(CHANGE_SUNSET, sunset);
+          commit(CHANGE_WEATHER_LIST, list.slice(0, 5));
           if (state.error) {
             commit(REMOVE_ERROR);
           }
         })
         .catch((err) => {
-          commit(ADD_ERROR, { error: err.message });
+          commit(ADD_ERROR, err.message);
         });
     },
   },

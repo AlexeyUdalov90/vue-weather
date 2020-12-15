@@ -45,17 +45,17 @@ export default {
     }),
     ...mapActions(['getWeather']),
   },
-  mounted: function() {
+  mounted() {
     const lastCity = localStorage.getItem('lastCity');
     const favoritesCity = JSON.parse(localStorage.getItem('favoritesCity'));
     if (lastCity) {
-      this.getWeather({ cityName: lastCity })
+      this.getWeather(lastCity)
         .then(() => {
-          this.changeFavoriteState({ isFavorite: this.hasFavoriteCity(lastCity) });
+          this.changeFavoriteState(this.hasFavoriteCity(lastCity));
         });
     }
     if (favoritesCity) {
-      this.addFavoriteList({ favorites: favoritesCity });
+      this.addFavoriteList(favoritesCity);
     }
   },
 }

@@ -1,10 +1,10 @@
 <template>
   <div class="weather-list">
     <div class="weather-list__item weather-list__item--big">
-      <BigWeatherCard :weatherInfo="weatherList[0]" />
+      <BigWeatherCard :weatherInfo="firstWeatherValue" />
     </div>
     <div class="weather-list__item weather-list__item--small" 
-         v-for="(item, index) in weatherList.slice(1)"
+         v-for="(item, index) in otherWeatherValue"
          :key="index">
       <SmallWeatherCard :info="item" />
     </div>
@@ -24,6 +24,12 @@ export default {
   },
   computed: {
     ...mapState(['weatherList']),
+    firstWeatherValue() {
+      return this.weatherList[0];
+    },
+    otherWeatherValue() {
+      return this.weatherList.slice(1);
+    },
   }
 }
 </script>

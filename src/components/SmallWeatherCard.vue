@@ -19,7 +19,8 @@ export default {
   },
   computed: {
     icon() {
-      return `img/icons/${this.info.weather[0].icon.match(/\d*/)[0]}.svg`;
+      const iconName = this.info.weather[0].icon.match(/\d*/)[0];
+      return `img/icons/${iconName}.svg`;
     },
     temperature() {
       return this.info.main.temp;
